@@ -1,13 +1,14 @@
+import 'package:candy_store/cart_notifier.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:candy_store/product_list_item_view.dart';
 import 'package:flutter/material.dart';
 
 class ProductsPage extends StatefulWidget {
-  final Function(ProductListItem) onAddToCart;
+  final CartNotifier cartNotifier;
 
   const ProductsPage({
     Key? key,
-    required this.onAddToCart,
+    required this.cartNotifier,
   }) : super(key: key);
 
   @override
@@ -220,7 +221,7 @@ class _ProductsPageState extends State<ProductsPage> {
           final item = items[index];
           return ProductListItemView(
             item: item,
-            onAddToCart: widget.onAddToCart,
+            cartNotifier: widget.cartNotifier,
           );
         },
       ),
