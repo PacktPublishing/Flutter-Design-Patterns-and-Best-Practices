@@ -219,10 +219,7 @@ class _ProductsPageState extends State<ProductsPage> {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return ProductListItemView(
-            item: item,
-            cartNotifier: widget.cartNotifier,
-          );
+          return ProductListItemView(item: item);
         },
       ),
     );

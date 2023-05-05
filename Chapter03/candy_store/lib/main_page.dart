@@ -1,5 +1,5 @@
 import 'package:candy_store/cart_button.dart';
-import 'package:candy_store/cart_notifier.dart';
+import 'package:candy_store/cart_notifier_provider.dart';
 import 'package:candy_store/cart_page.dart';
 import 'package:candy_store/products_page.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +12,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  CartNotifier cartNotifier = CartNotifier();
-
   @override
   Widget build(BuildContext context) {
+    final cartNotifier = CartProvider.of(context);
+
     return AnimatedBuilder(
       animation: cartNotifier,
       builder: (context, _) {
@@ -43,9 +43,7 @@ class _MainPageState extends State<MainPage> {
   void openCart() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CartPage(
-          cartNotifier: cartNotifier,
-        ),
+        builder: (context) => const CartPage(),
       ),
     );
   }
