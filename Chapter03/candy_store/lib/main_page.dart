@@ -16,8 +16,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final cartNotifier = CartProvider.of(context);
 
-    return AnimatedBuilder(
-      animation: cartNotifier,
+    return ListenableBuilder(
+      listenable: cartNotifier,
       builder: (context, _) {
         return Stack(
           children: [

@@ -20,8 +20,8 @@ class _CartPageState extends State<CartPage> {
       appBar: AppBar(
         title: const Text('Cart'),
       ),
-      body: AnimatedBuilder(
-        animation: cartNotifier,
+      body: ListenableBuilder(
+        listenable: cartNotifier,
         builder: (context, _) {
           return Stack(
             children: [
