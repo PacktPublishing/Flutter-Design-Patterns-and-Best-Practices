@@ -3,10 +3,10 @@ import 'package:candy_store/cart_model.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:flutter/foundation.dart';
 
-class CartNotifier extends ChangeNotifier {
+class CartViewModel extends ChangeNotifier {
   final CartModel _cartModel = CartModel();
 
-  CartNotifier() {
+  CartViewModel() {
     _cartModel.cartInfoStream.listen((cartInfo) {
       _items.clear();
       _totalItems = cartInfo.totalItems;

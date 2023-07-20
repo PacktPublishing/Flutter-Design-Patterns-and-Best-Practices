@@ -5,7 +5,7 @@ import 'package:candy_store/cart_list_item.dart';
 import 'package:candy_store/product_list_item.dart';
 
 class CartModel {
-  CartInfo _cartInfo = CartInfo(
+  final CartInfo _cartInfo = CartInfo(
     items: {},
     totalPrice: 0,
     totalItems: 0,
@@ -36,7 +36,6 @@ class CartModel {
     _cartInfo.totalPrice += item.price;
 
     _cartInfoController.add(_cartInfo);
-    //notifyListeners();
   }
 
   void removeFromCart(CartListItem item) {
@@ -56,7 +55,6 @@ class CartModel {
     _cartInfo.totalPrice -= item.product.price;
 
     _cartInfoController.add(_cartInfo);
-    //notifyListeners();
   }
 
   void dispose() {

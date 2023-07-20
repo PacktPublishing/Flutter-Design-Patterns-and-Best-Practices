@@ -1,15 +1,9 @@
-import 'package:candy_store/cart_notifier.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:candy_store/product_list_item_view.dart';
 import 'package:flutter/material.dart';
 
 class ProductsPage extends StatefulWidget {
-  final CartNotifier cartNotifier;
-
-  const ProductsPage({
-    Key? key,
-    required this.cartNotifier,
-  }) : super(key: key);
+  const ProductsPage({super.key});
 
   @override
   State<ProductsPage> createState() => _ProductsPageState();

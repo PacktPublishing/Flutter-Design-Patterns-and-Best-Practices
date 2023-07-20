@@ -1,5 +1,5 @@
 import 'package:candy_store/cart_list_item_view.dart';
-import 'package:candy_store/cart_notifier_provider.dart';
+import 'package:candy_store/cart_view_model_provider.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
@@ -14,14 +14,14 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
-    final cartNotifier = CartProvider.of(context);
+    final cartViewModel = CartViewModelProvider.of(context);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
       ),
       body: ListenableBuilder(
-        listenable: cartNotifier,
+        listenable: cartViewModel,
         builder: (context, _) {
           return Stack(
             children: [
@@ -29,9 +29,9 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.only(bottom: 60),
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  itemCount: cartNotifier.items.length,
+                  itemCount: cartViewModel.items.length,
                   itemBuilder: (context, index) {
-                    final item = cartNotifier.items[index];
+                    final item = cartViewModel.items[index];
                     return CartListItemView(item: item);
                   },
                 ),
@@ -60,7 +60,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       Text(
-                        '${cartNotifier.totalPrice} €',
+                        '${cartViewModel.totalPrice} €',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
