@@ -17,7 +17,8 @@ class CartModel {
       StreamController<CartInfo>();
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
 
-  void addToCart(ProductListItem item) {
+  Future<void> addToCart(ProductListItem item) async {
+    await Future.delayed(const Duration(seconds: 3));
     CartListItem? existingItem = _cartInfo.items[item.id];
     if (existingItem != null) {
       existingItem = CartListItem(
@@ -38,7 +39,9 @@ class CartModel {
     _cartInfoController.add(_cartInfo);
   }
 
-  void removeFromCart(CartListItem item) {
+  Future<void> removeFromCart(CartListItem item) async {
+    await Future.delayed(const Duration(seconds: 3));
+    // throw Exception('Could not remove item from cart');
     CartListItem? existingItem = _cartInfo.items[item.product.id];
     if (existingItem != null) {
       if (existingItem.quantity > 1) {

@@ -1,4 +1,5 @@
 import 'package:candy_store/cart_list_item_view.dart';
+import 'package:candy_store/cart_view_model.dart';
 import 'package:candy_store/cart_view_model_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,15 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
+  late final CartViewModel _cartViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _cartViewModel = CartViewModelProvider.read(context);
+    _cartViewModel.addListener(_onCartViewModelChanged);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartViewModel = CartViewModelProvider.of(context);
@@ -60,14 +70,23 @@ class _CartPageState extends State<CartPage> {
                           color: Colors.black,
                         ),
                       ),
-                      Text(
-                        '${cartViewModel.state.totalPrice} €',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                      if (cartViewModel.state.isProcessing)
+                        const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
+                      if (!cartViewModel.state.isProcessing)
+                        Text(
+                          '${cartViewModel.state.totalPrice} €',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
                     ],
                   ),
                 ),
@@ -77,5 +96,22 @@ class _CartPageState extends State<CartPage> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _cartViewModel.removeListener(_onCartViewModelChanged);
+  }
+
+  void _onCartViewModelChanged() {
+    if (_cartViewModel.state.error != null) {
+      _cartViewModel.clearError();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to perform this action'),
+        ),
+      );
+    }
   }
 }
