@@ -2,7 +2,7 @@ import 'package:candy_store/cart_list_item.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:equatable/equatable.dart';
 
-abstract final class CartEvent extends Equatable {
+sealed class CartEvent extends Equatable {
   const CartEvent();
 
   @override

@@ -39,7 +39,7 @@ class _CartPageState extends State<CartPage> {
       ),
       body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
-          if (state.error != null) {
+          if (state.loadingResult.error != null) {
             _cartBloc.add(const ClearError());
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -86,7 +86,7 @@ class _CartPageState extends State<CartPage> {
                           color: Colors.black,
                         ),
                       ),
-                      if (state.isProcessing)
+                      if (state.loadingResult.isInProgress)
                         const SizedBox(
                           width: 24,
                           height: 24,
@@ -94,7 +94,7 @@ class _CartPageState extends State<CartPage> {
                             color: Colors.black,
                           ),
                         ),
-                      if (!state.isProcessing)
+                      if (!state.loadingResult.isInProgress)
                         Text(
                           '${state.totalPrice} €',
                           style: const TextStyle(
