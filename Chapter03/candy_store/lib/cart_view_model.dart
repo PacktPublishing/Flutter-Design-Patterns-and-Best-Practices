@@ -20,7 +20,7 @@ class CartViewModel extends ChangeNotifier {
     });
   }
 
-  CartState _state = CartState(
+  CartState _state = const CartState(
     items: {},
     totalPrice: 0,
     totalItems: 0,

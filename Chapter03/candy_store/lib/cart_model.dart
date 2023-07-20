@@ -5,17 +5,24 @@ import 'package:candy_store/cart_list_item.dart';
 import 'package:candy_store/product_list_item.dart';
 
 class CartModel {
+  CartModel._internal();
+
+  static final CartModel _instance = CartModel._internal();
+
+  factory CartModel() => _instance;
+
   final CartInfo _cartInfo = CartInfo(
     items: {},
     totalPrice: 0,
     totalItems: 0,
   );
 
-  CartInfo get cartInfo => _cartInfo;
-
   final StreamController<CartInfo> _cartInfoController =
-      StreamController<CartInfo>();
+      StreamController<CartInfo>.broadcast();
+
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
+
+  Future<CartInfo> get cartInfoFuture async => _cartInfo;
 
   Future<void> addToCart(ProductListItem item) async {
     await Future.delayed(const Duration(seconds: 3));
