@@ -29,10 +29,11 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.only(bottom: 60),
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  itemCount: cartViewModel.items.length,
-                  itemBuilder: (context, index) {
-                    final item = cartViewModel.items[index];
-                    return CartListItemView(item: item);
+                  itemCount: cartViewModel.state.items.length,
+                  itemBuilder: (_, index) {
+                    return CartListItemView(
+                      item: cartViewModel.state.items.values.toList()[index],
+                    );
                   },
                 ),
               ),
@@ -60,7 +61,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       Text(
-                        '${cartViewModel.totalPrice} €',
+                        '${cartViewModel.state.totalPrice} €',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,

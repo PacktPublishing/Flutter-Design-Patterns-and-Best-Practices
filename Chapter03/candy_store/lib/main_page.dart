@@ -28,7 +28,7 @@ class _MainPageState extends State<MainPage> {
               child: GestureDetector(
                 onTap: openCart,
                 child: CartButton(
-                  count: cartViewModel.totalItems,
+                  count: cartViewModel.state.totalItems,
                 ),
               ),
             ),
