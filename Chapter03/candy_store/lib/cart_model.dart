@@ -22,7 +22,9 @@ class CartModel {
 
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
 
-  Future<CartInfo> get cartInfoFuture async => _cartInfo;
+  Future<CartInfo> get cartInfoFuture async => _cartInfo.copyWith(
+    items: Map.unmodifiable(_cartInfo.items),
+  );
 
   Future<void> addToCart(ProductListItem item) async {
     await Future.delayed(const Duration(seconds: 3));
@@ -43,7 +45,11 @@ class CartModel {
     _cartInfo.totalItems++;
     _cartInfo.totalPrice += item.price;
 
-    _cartInfoController.add(_cartInfo);
+    final cartInfo = _cartInfo.copyWith(
+      items: Map.unmodifiable(_cartInfo.items),
+    );
+
+    _cartInfoController.add(cartInfo);
   }
 
   Future<void> removeFromCart(CartListItem item) async {
@@ -64,7 +70,11 @@ class CartModel {
     _cartInfo.totalItems--;
     _cartInfo.totalPrice -= item.product.price;
 
-    _cartInfoController.add(_cartInfo);
+    final cartInfo = _cartInfo.copyWith(
+      items: Map.unmodifiable(_cartInfo.items),
+    );
+
+    _cartInfoController.add(cartInfo);
   }
 
   void dispose() {
