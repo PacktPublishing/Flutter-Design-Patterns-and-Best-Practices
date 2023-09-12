@@ -8,9 +8,9 @@ class CartListItemView extends StatelessWidget {
   final CartListItem item;
 
   const CartListItemView({
-    Key? key,
+    super.key,
     required this.item,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

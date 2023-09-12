@@ -4,8 +4,9 @@ import 'package:candy_store/cart_view_model_provider.dart';
 import 'package:candy_store/products_page.dart';
 import 'package:flutter/material.dart';
 
+// TODO: Cherry pick this `super.key` commit into CH3 & CH4 branches
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();

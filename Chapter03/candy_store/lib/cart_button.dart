@@ -4,9 +4,9 @@ class CartButton extends StatelessWidget {
   final int count;
 
   const CartButton({
-    Key? key,
+    super.key,
     required this.count,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

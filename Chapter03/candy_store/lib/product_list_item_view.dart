@@ -7,9 +7,9 @@ class ProductListItemView extends StatelessWidget {
   final ProductListItem item;
 
   const ProductListItemView({
-    Key? key,
+    super.key,
     required this.item,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
