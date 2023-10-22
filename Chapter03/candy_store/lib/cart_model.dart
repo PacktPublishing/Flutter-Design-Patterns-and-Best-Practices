@@ -23,8 +23,8 @@ class CartModel {
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
 
   Future<CartInfo> get cartInfoFuture async => _cartInfo.copyWith(
-    items: Map.unmodifiable(_cartInfo.items),
-  );
+        items: Map.unmodifiable(_cartInfo.items),
+      );
 
   Future<void> addToCart(ProductListItem item) async {
     await Future.delayed(const Duration(seconds: 3));
