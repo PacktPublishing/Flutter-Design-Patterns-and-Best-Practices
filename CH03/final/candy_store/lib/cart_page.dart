@@ -1,14 +1,9 @@
 import 'package:candy_store/cart_list_item_view.dart';
-import 'package:candy_store/cart_notifier.dart';
+import 'package:candy_store/cart_notifier_provider.dart';
 import 'package:flutter/material.dart';
 
 class CartPage extends StatefulWidget {
-  final CartNotifier cartNotifier;
-
-  const CartPage({
-    super.key,
-    required this.cartNotifier,
-  });
+  const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -17,12 +12,14 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cartNotifier = CartProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
       ),
       body: ListenableBuilder(
-        listenable: widget.cartNotifier,
+        listenable: cartNotifier,
         builder: (context, _) {
           return Stack(
             children: [
@@ -30,13 +27,10 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.only(bottom: 60),
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  itemCount: widget.cartNotifier.items.length,
+                  itemCount: cartNotifier.items.length,
                   itemBuilder: (context, index) {
-                    final item = widget.cartNotifier.items[index];
-                    return CartListItemView(
-                      item: item,
-                      cartNotifier: widget.cartNotifier,
-                    );
+                    final item = cartNotifier.items[index];
+                    return CartListItemView(item: item);
                   },
                 ),
               ),
@@ -64,7 +58,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       Text(
-                        '${widget.cartNotifier.totalPrice} €',
+                        '${cartNotifier.totalPrice} €',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
