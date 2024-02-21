@@ -1,15 +1,16 @@
+import 'package:candy_store/cart_notifier.dart';
 import 'package:candy_store/product_details_page.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ProductListItemView extends StatelessWidget {
   final ProductListItem item;
-  final Function(ProductListItem) onAddToCart;
+  final CartNotifier cartNotifier;
 
   const ProductListItemView({
     super.key,
     required this.item,
-    required this.onAddToCart,
+    required this.cartNotifier,
   });
 
   @override
@@ -20,7 +21,7 @@ class ProductListItemView extends StatelessWidget {
           MaterialPageRoute(
             builder: (_) => ProductDetailsPage(
               product: item,
-              onAddToCart: onAddToCart,
+              cartNotifier: cartNotifier,
             ),
           ),
         );
@@ -75,7 +76,7 @@ class ProductListItemView extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
-                  onTap: () => onAddToCart(item),
+                  onTap: () => cartNotifier.addToCart(item),
                   child: Icon(
                     Icons.add,
                     size: 24,
