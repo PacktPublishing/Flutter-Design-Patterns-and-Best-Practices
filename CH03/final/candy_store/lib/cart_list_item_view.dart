@@ -1,22 +1,27 @@
 import 'package:candy_store/cart_list_item.dart';
-import 'package:candy_store/cart_notifier_provider.dart';
 import 'package:flutter/material.dart';
 
 class CartListItemView extends StatelessWidget {
   final CartListItem item;
+  final Function(CartListItem) onRemoveFromCart;
+  final Function(CartListItem) onAddToCart;
 
   const CartListItemView({
-    super.key,
+    Key? key,
     required this.item,
-  });
+    required this.onRemoveFromCart,
+    required this.onAddToCart,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final cartNotifier = CartProvider.of(context);
-
     final product = item.product;
+    final iconColor = Theme.of(context).colorScheme.secondary;
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      padding: const EdgeInsets.symmetric(
+        vertical: 12,
+        horizontal: 16,
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -54,10 +59,10 @@ class CartListItemView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: () => cartNotifier.removeFromCart(item),
+                          onPressed: () => onRemoveFromCart(item),
                           icon: Icon(
                             Icons.remove,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: iconColor,
                           ),
                         ),
                         Text(
@@ -68,10 +73,10 @@ class CartListItemView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => cartNotifier.addToCart(item.product),
+                          onPressed: () => onAddToCart(item),
                           icon: Icon(
                             Icons.add,
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: iconColor,
                           ),
                         ),
                       ],

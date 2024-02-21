@@ -14,9 +14,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<CartListItem> cartItems = [];
-
-  // The Map key is the id of the CartListItem. We will use a Map data structure
-  // because it is easier to manage the addition, removal & count of the items.
   final Map<String, CartListItem> cartItemsMap = {};
 
   @override
