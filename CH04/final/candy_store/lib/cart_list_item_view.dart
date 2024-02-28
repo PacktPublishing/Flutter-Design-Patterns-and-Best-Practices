@@ -54,7 +54,9 @@ class CartListItemView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: () => cartViewModel.removeFromCart(item),
+                          onPressed: cartViewModel.state.isProcessing
+                              ? null
+                              : () => cartViewModel.removeFromCart(item),
                           icon: Icon(
                             Icons.remove,
                             color: Theme.of(context).colorScheme.secondary,
@@ -68,7 +70,9 @@ class CartListItemView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => cartViewModel.addToCart(item.product),
+                          onPressed: cartViewModel.state.isProcessing
+                              ? null
+                              : () => cartViewModel.addToCart(item.product),
                           icon: Icon(
                             Icons.add,
                             color: Theme.of(context).colorScheme.secondary,
