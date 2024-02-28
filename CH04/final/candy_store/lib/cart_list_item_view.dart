@@ -1,5 +1,5 @@
 import 'package:candy_store/cart_list_item.dart';
-import 'package:candy_store/cart_notifier_provider.dart';
+import 'package:candy_store/cart_view_model_provider.dart';
 import 'package:flutter/material.dart';
 
 class CartListItemView extends StatelessWidget {
@@ -12,7 +12,7 @@ class CartListItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartNotifier = CartProvider.of(context);
+    final cartViewModel = CartViewModelProvider.of(context);
 
     final product = item.product;
     return Container(
@@ -54,7 +54,7 @@ class CartListItemView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: () => cartNotifier.removeFromCart(item),
+                          onPressed: () => cartViewModel.removeFromCart(item),
                           icon: Icon(
                             Icons.remove,
                             color: Theme.of(context).colorScheme.secondary,
@@ -68,7 +68,7 @@ class CartListItemView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: () => cartNotifier.addToCart(item.product),
+                          onPressed: () => cartViewModel.addToCart(item.product),
                           icon: Icon(
                             Icons.add,
                             color: Theme.of(context).colorScheme.secondary,
