@@ -1,8 +1,23 @@
 import 'package:candy_store/cart_list_item.dart';
+import 'package:candy_store/cart_model.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:flutter/foundation.dart';
 
 class CartNotifier extends ChangeNotifier {
+  final CartModel _cartModel = CartModel();
+
+  CartNotifier() {
+    _cartModel.cartInfoStream.listen((cartInfo) {
+      _items.clear();
+      _totalItems = cartInfo.totalItems;
+      _totalPrice = cartInfo.totalPrice;
+      cartInfo.items.forEach((key, value) {
+        _items[key] = value;
+      });
+      notifyListeners();
+    });
+  }
+
   final Map<String, CartListItem> _items = {};
   double _totalPrice = 0;
   int _totalItems = 0;
@@ -14,42 +29,16 @@ class CartNotifier extends ChangeNotifier {
   int get totalItems => _totalItems;
 
   void addToCart(ProductListItem item) {
-    CartListItem? existingItem = _items[item.id];
-    if (existingItem != null) {
-      existingItem = CartListItem(
-        product: existingItem.product,
-        quantity: existingItem.quantity + 1,
-      );
-      _items[item.id] = existingItem;
-    } else {
-      final cartItem = CartListItem(
-        product: item,
-        quantity: 1,
-      );
-      _items[item.id] = cartItem;
-    }
-    _totalItems++;
-    _totalPrice += item.price;
-
-    notifyListeners();
+    _cartModel.addToCart(item);
   }
 
   void removeFromCart(CartListItem item) {
-    CartListItem? existingItem = _items[item.product.id];
-    if (existingItem != null) {
-      if (existingItem.quantity > 1) {
-        existingItem = CartListItem(
-          product: existingItem.product,
-          quantity: existingItem.quantity - 1,
-        );
-        _items[item.product.id] = existingItem;
-      } else {
-        _items.remove(item.product.id);
-      }
-    }
-    _totalItems--;
-    _totalPrice -= item.product.price;
+    _cartModel.removeFromCart(item);
+  }
 
-    notifyListeners();
+  @override
+  void dispose() {
+    super.dispose();
+    _cartModel.dispose();
   }
 }
