@@ -56,7 +56,7 @@ class CartListItemView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: cartBloc.state.isProcessing
+                          onPressed: cartBloc.state.loadingResult.isInProgress
                               ? null
                               : () => cartBloc.add(RemoveItem(item)),
                           icon: Icon(
@@ -72,7 +72,7 @@ class CartListItemView extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                          onPressed: cartBloc.state.isProcessing
+                          onPressed: cartBloc.state.loadingResult.isInProgress
                               ? null
                               : () => cartBloc.add(AddItem(item.product)),
                           icon: Icon(
