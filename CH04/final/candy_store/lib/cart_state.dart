@@ -1,13 +1,14 @@
 import 'package:candy_store/cart_list_item.dart';
+import 'package:equatable/equatable.dart';
 
-class CartState {
+class CartState extends Equatable {
   final Map<String, CartListItem> items;
   final double totalPrice;
   final int totalItems;
   final bool isProcessing;
   final Exception? error;
 
-  CartState({
+  const CartState({
     required this.items,
     required this.totalPrice,
     required this.totalItems,
@@ -27,7 +28,16 @@ class CartState {
       totalPrice: totalPrice ?? this.totalPrice,
       totalItems: totalItems ?? this.totalItems,
       isProcessing: isProcessing ?? this.isProcessing,
-      error: error,
+      error: error ?? this.error,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        items,
+        totalPrice,
+        totalItems,
+        isProcessing,
+        error,
+      ];
 }

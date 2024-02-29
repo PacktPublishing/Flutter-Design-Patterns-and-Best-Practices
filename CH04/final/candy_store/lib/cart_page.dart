@@ -1,23 +1,31 @@
+import 'package:candy_store/cart_cubit.dart';
 import 'package:candy_store/cart_list_item_view.dart';
-import 'package:candy_store/cart_view_model.dart';
-import 'package:candy_store/cart_view_model_provider.dart';
+import 'package:candy_store/cart_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
   @override
   State<CartPage> createState() => _CartPageState();
+
+  static Widget withBloc() {
+    return BlocProvider<CartCubit>(
+      create: (context) => CartCubit(),
+      child: const CartPage(),
+    );
+  }
 }
 
 class _CartPageState extends State<CartPage> {
-  late final CartViewModel _cartViewModel;
+  late final CartCubit _cartCubit;
 
   @override
   void initState() {
     super.initState();
-    _cartViewModel = CartViewModelProvider.read(context);
-    _cartViewModel.addListener(_onCartViewModelStateChanged);
+    _cartCubit = context.read<CartCubit>();
+    _cartCubit.loadCart();
   }
 
   @override
@@ -26,19 +34,27 @@ class _CartPageState extends State<CartPage> {
       appBar: AppBar(
         title: const Text('Cart'),
       ),
-      body: ListenableBuilder(
-        listenable: _cartViewModel,
-        builder: (context, _) {
+      body: BlocConsumer<CartCubit, CartState>(
+        listener: (context, state) {
+          if (state.error != null) {
+            _cartCubit.clearError();
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Failed to perform this action'),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
           return Stack(
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 60),
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  itemCount: _cartViewModel.state.items.length,
+                  itemCount: state.items.length,
                   itemBuilder: (context, index) {
-                    final item =
-                        _cartViewModel.state.items.values.toList()[index];
+                    final item = state.items.values.toList()[index];
                     return CartListItemView(item: item);
                   },
                 ),
@@ -66,7 +82,7 @@ class _CartPageState extends State<CartPage> {
                           color: Colors.black,
                         ),
                       ),
-                      if (_cartViewModel.state.isProcessing)
+                      if (state.isProcessing)
                         const SizedBox(
                           width: 24,
                           height: 24,
@@ -74,9 +90,9 @@ class _CartPageState extends State<CartPage> {
                             color: Colors.black,
                           ),
                         ),
-                      if (!_cartViewModel.state.isProcessing)
+                      if (!state.isProcessing)
                         Text(
-                          '${_cartViewModel.state.totalPrice} €',
+                          '${state.totalPrice} €',
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -92,22 +108,5 @@ class _CartPageState extends State<CartPage> {
         },
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _cartViewModel.removeListener(_onCartViewModelStateChanged);
-  }
-
-  void _onCartViewModelStateChanged() {
-    if (_cartViewModel.state.error != null) {
-      _cartViewModel.clearError();
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Failed to perform this action'),
-        ),
-      );
-    }
   }
 }
