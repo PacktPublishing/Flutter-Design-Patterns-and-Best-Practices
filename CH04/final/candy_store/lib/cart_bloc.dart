@@ -2,6 +2,7 @@ import 'package:candy_store/cart_event.dart';
 import 'package:candy_store/cart_info.dart';
 import 'package:candy_store/cart_model.dart';
 import 'package:candy_store/cart_state.dart';
+import 'package:candy_store/delayed_result.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,6 +15,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             items: {},
             totalPrice: 0,
             totalItems: 0,
+            loadingResult: DelayedResult.none(),
           ),
         ) {
     on<Load>(_onLoad);
@@ -24,7 +26,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _onLoad(Load event, Emitter emit) async {
     try {
-      emit(state.copyWith(isProcessing: true));
+      emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
       final cartInfo = await _cartModel.cartInfoFuture;
       // TODO: Should actually copy the Map and not just the reference
       emit(
@@ -34,7 +36,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           totalItems: cartInfo.totalItems,
         ),
       );
-      emit(state.copyWith(isProcessing: false));
+      emit(state.copyWith(loadingResult: const DelayedResult.none()));
       await emit.onEach(
         _cartModel.cartInfoStream,
         onData: (CartInfo cartInfo) {
@@ -53,32 +55,32 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         },
       );
     } on Exception catch (ex) {
-      emit(state.copyWith(error: ex));
+      emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }
   }
 
   Future<void> _onAddItem(AddItem event, Emitter emit) async {
     try {
-      emit(state.copyWith(isProcessing: true));
+      emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
       await _cartModel.addToCart(event.item);
-      emit(state.copyWith(isProcessing: false));
+      emit(state.copyWith(loadingResult: const DelayedResult.none()));
     } on Exception catch (ex) {
-      emit(state.copyWith(error: ex));
+      emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }
   }
 
   Future<void> _onRemoveItem(RemoveItem event, Emitter emit) async {
     try {
-      emit(state.copyWith(isProcessing: true));
+      emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
       await _cartModel.removeFromCart(event.item);
-      emit(state.copyWith(isProcessing: false));
+      emit(state.copyWith(loadingResult: const DelayedResult.none()));
     } on Exception catch (ex) {
-      emit(state.copyWith(error: ex));
+      emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }
   }
 
   void _onClearError(ClearError event, Emitter emit) {
-    emit(state.copyWith(error: null));
+    emit(state.copyWith(loadingResult: const DelayedResult.none()));
   }
 
 /*  @override
