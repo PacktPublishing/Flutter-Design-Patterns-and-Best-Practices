@@ -1,4 +1,5 @@
-import 'package:candy_store/cart_cubit.dart';
+import 'package:candy_store/cart_bloc.dart';
+import 'package:candy_store/cart_event.dart';
 import 'package:candy_store/cart_list_item_view.dart';
 import 'package:candy_store/cart_state.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +12,21 @@ class CartPage extends StatefulWidget {
   State<CartPage> createState() => _CartPageState();
 
   static Widget withBloc() {
-    return BlocProvider<CartCubit>(
-      create: (context) => CartCubit(),
+    return BlocProvider<CartBloc>(
+      create: (context) => CartBloc(),
       child: const CartPage(),
     );
   }
 }
 
 class _CartPageState extends State<CartPage> {
-  late final CartCubit _cartCubit;
+  late final CartBloc _cartBloc;
 
   @override
   void initState() {
     super.initState();
-    _cartCubit = context.read<CartCubit>();
-    _cartCubit.loadCart();
+    _cartBloc = context.read<CartBloc>();
+    _cartBloc.add(const Load());
   }
 
   @override
@@ -34,10 +35,10 @@ class _CartPageState extends State<CartPage> {
       appBar: AppBar(
         title: const Text('Cart'),
       ),
-      body: BlocConsumer<CartCubit, CartState>(
+      body: BlocConsumer<CartBloc, CartState>(
         listener: (context, state) {
           if (state.error != null) {
-            _cartCubit.clearError();
+            _cartBloc.add(const ClearError());
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Failed to perform this action'),

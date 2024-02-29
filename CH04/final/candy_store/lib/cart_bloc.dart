@@ -1,13 +1,14 @@
-import 'package:candy_store/cart_list_item.dart';
+import 'package:candy_store/cart_event.dart';
+import 'package:candy_store/cart_info.dart';
 import 'package:candy_store/cart_model.dart';
 import 'package:candy_store/cart_state.dart';
-import 'package:candy_store/product_list_item.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CartCubit extends Cubit<CartState> {
+class CartBloc extends Bloc<CartEvent, CartState> {
   final CartModel _cartModel = CartModel();
 
-  CartCubit()
+  CartBloc()
       : super(
           const CartState(
             items: {},
@@ -15,20 +16,13 @@ class CartCubit extends Cubit<CartState> {
             totalItems: 0,
           ),
         ) {
-    _cartModel.cartInfoStream.listen(
-      (cartInfo) {
-        emit(
-          state.copyWith(
-            items: cartInfo.items,
-            totalPrice: cartInfo.totalPrice,
-            totalItems: cartInfo.totalItems,
-          ),
-        );
-      },
-    );
+    on<Load>(_onLoad);
+    on<AddItem>(_onAddItem);
+    on<RemoveItem>(_onRemoveItem);
+    on<ClearError>(_onClearError);
   }
 
-  Future<void> loadCart() async {
+  Future<void> _onLoad(Load event, Emitter emit) async {
     try {
       emit(state.copyWith(isProcessing: true));
       final cartInfo = await _cartModel.cartInfoFuture;
@@ -41,38 +35,55 @@ class CartCubit extends Cubit<CartState> {
         ),
       );
       emit(state.copyWith(isProcessing: false));
+      await emit.onEach(
+        _cartModel.cartInfoStream,
+        onData: (CartInfo cartInfo) {
+          emit(
+            state.copyWith(
+              items: cartInfo.items,
+              totalPrice: cartInfo.totalPrice,
+              totalItems: cartInfo.totalItems,
+            ),
+          );
+        },
+        onError: (Object error, StackTrace stackTrace) {
+          if (kDebugMode) {
+            print('Error: $error');
+          }
+        },
+      );
     } on Exception catch (ex) {
       emit(state.copyWith(error: ex));
     }
   }
 
-  Future<void> addToCart(ProductListItem item) async {
+  Future<void> _onAddItem(AddItem event, Emitter emit) async {
     try {
       emit(state.copyWith(isProcessing: true));
-      await _cartModel.addToCart(item);
+      await _cartModel.addToCart(event.item);
       emit(state.copyWith(isProcessing: false));
     } on Exception catch (ex) {
       emit(state.copyWith(error: ex));
     }
   }
 
-  Future<void> removeFromCart(CartListItem item) async {
+  Future<void> _onRemoveItem(RemoveItem event, Emitter emit) async {
     try {
       emit(state.copyWith(isProcessing: true));
-      await _cartModel.removeFromCart(item);
+      await _cartModel.removeFromCart(event.item);
       emit(state.copyWith(isProcessing: false));
     } on Exception catch (ex) {
       emit(state.copyWith(error: ex));
     }
   }
 
-  void clearError() {
+  void _onClearError(ClearError event, Emitter emit) {
     emit(state.copyWith(error: null));
   }
 
-  @override
+/*  @override
   Future<void> close() async {
     _cartModel.dispose();
     super.close();
-  }
+  }*/
 }
