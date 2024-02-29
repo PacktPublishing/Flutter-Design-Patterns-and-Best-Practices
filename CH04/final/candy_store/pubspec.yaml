@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.4
 
 
   # The following adds the Cupertino Icons font to your application.
