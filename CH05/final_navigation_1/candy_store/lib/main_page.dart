@@ -38,6 +38,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  //This is the imperative style navigation with anonymous routing.
   void openCart() {
     Navigator.of(context).push(
       MaterialPageRoute(
