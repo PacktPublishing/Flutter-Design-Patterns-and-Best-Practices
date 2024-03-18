@@ -1,3 +1,4 @@
+import 'package:candy_store/cart_page.dart';
 import 'package:candy_store/cart_view_model.dart';
 import 'package:candy_store/cart_view_model_provider.dart';
 import 'package:candy_store/main_page.dart';
@@ -13,7 +14,11 @@ void main() {
         theme: ThemeData(
           primarySwatch: Colors.lime,
         ),
-        home: const MainPage(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const MainPage(),
+          '/cart': (context) => CartPage.withBloc(),
+        },
       ),
     ),
   );
