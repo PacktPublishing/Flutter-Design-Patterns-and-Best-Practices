@@ -38,12 +38,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  //This is the imperative style navigation with anonymous routing.
+  //This is the imperative style navigation with named routing.
   void openCart() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CartPage.withBloc(),
-      ),
-    );
+    Navigator.of(context).pushNamed('/cart');
   }
 }
