@@ -56,7 +56,14 @@ class _CandyShopAppState extends State<CandyShopApp> {
               desserts: desserts,
               onTapped: _handleDessertTapped,
             ),
-          )
+          ),
+          if (_selectedDessert != null)
+            MaterialPage(
+              key: ValueKey(_selectedDessert),
+              child: DessertDetailsScreen(
+                dessert: _selectedDessert!,
+              ),
+            )
         ],
         onPopPage: (route, result) => route.didPop(result),
       ),
@@ -103,6 +110,43 @@ class DessertsListScreen extends StatelessWidget {
               onTap: () => onTapped(dessert),
             )
         ],
+      ),
+    );
+  }
+}
+
+class DessertDetailsScreen extends StatelessWidget {
+  final Dessert dessert;
+
+  const DessertDetailsScreen({
+    super.key,
+    required this.dessert,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detail Page for ${dessert.name}'),
+      ),
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 250,
+                  height: 250,
+                  child: Image.asset(dessert.imageUrl),
+                ),
+              ),
+              Text(dessert.name, style: Theme.of(context).textTheme.titleLarge),
+              Text(dessert.description, style: Theme.of(context).textTheme.titleMedium),
+            ],
+          ],
+        ),
       ),
     );
   }
