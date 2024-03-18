@@ -4,6 +4,13 @@ void main() {
   runApp(const CandyShopApp());
 }
 
+class Dessert {
+  final String name;
+  final String description;
+  final String imageUrl;
+  Dessert(this.name, this.description, this.imageUrl);
+}
+
 class CandyShopApp extends StatefulWidget {
   const CandyShopApp({super.key});
 
@@ -12,6 +19,26 @@ class CandyShopApp extends StatefulWidget {
 }
 
 class _CandyShopAppState extends State<CandyShopApp> {
+  Dessert? _selectedDessert;
+
+  List<Dessert> desserts = [
+    Dessert(
+      'Cupcake',
+      'A delicious cupcake with a variety of flavors and toppings',
+      'resources/images/cupcake.webp',
+    ),
+    Dessert(
+      'Donut',
+      'A soft and sweet donut, glazed or filled with your favorite flavors',
+      'resources/images/donut.webp',
+    ),
+    Dessert(
+      'Eclair',
+      'A long pastry filled with cream and topped with chocolate icing',
+      'resources/images/eclair.webp',
+    ),
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -22,17 +49,60 @@ class _CandyShopAppState extends State<CandyShopApp> {
     return MaterialApp(
       title: 'Candy Shop',
       home: Navigator(
-        pages: const [
+        pages: [
           MaterialPage(
-            key: ValueKey('DessertsPage'),
-            child: Scaffold(
-              body: Center(
-                child: Text('Welcome to Candy Shop!'),
-              ),
+            key: const ValueKey('DessertsPage'),
+            child: DessertsListScreen(
+              desserts: desserts,
+              onTapped: _handleDessertTapped,
             ),
           )
         ],
         onPopPage: (route, result) => route.didPop(result),
+      ),
+    );
+  }
+
+  void _handleDessertTapped(Dessert dessert) {
+    setState(() {
+      _selectedDessert = dessert;
+    });
+  }
+}
+
+class DessertsListScreen extends StatelessWidget {
+  final List<Dessert> desserts;
+  final ValueChanged<Dessert> onTapped;
+
+  const DessertsListScreen({
+    super.key,
+    required this.desserts,
+    required this.onTapped,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('All Desserts'),
+      ),
+      body: ListView(
+        children: [
+          for (var dessert in desserts)
+            ListTile(
+              trailing: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 72,
+                  height: 72,
+                  child: Image.asset(dessert.imageUrl),
+                ),
+              ),
+              title: Text(dessert.name),
+              subtitle: Text(dessert.description),
+              onTap: () => onTapped(dessert),
+            )
+        ],
       ),
     );
   }
