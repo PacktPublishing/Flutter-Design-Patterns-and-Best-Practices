@@ -12,7 +12,7 @@ void main() {
             maxHeight: 100,
           ),
           color: Colors.red,
-          child: const Text('Hello Word'),
+          child: const Text('Hello World'),
         ),
       ),
     ),

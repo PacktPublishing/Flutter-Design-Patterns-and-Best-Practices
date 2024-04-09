@@ -10,7 +10,7 @@ void main() {
             const Size(200, 100),
           ),
           color: Colors.red,
-          child: const Text('Hello Word'),
+          child: const Text('Hello World'),
         ),
       ),
     ),

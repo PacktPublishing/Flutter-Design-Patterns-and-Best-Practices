@@ -11,7 +11,7 @@ void main() {
           color: Colors.red,
           child: const Align(
             alignment: Alignment.center,
-            child: Text('Hello Word'),
+            child: Text('Hello World'),
           ),
         ),
       ),
