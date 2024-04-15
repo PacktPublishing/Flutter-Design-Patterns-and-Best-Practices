@@ -1,7 +1,7 @@
-import 'package:candy_store/product_repository.dart';
+import 'package:candy_store/simple_product_repository.dart';
 import 'package:flutter/material.dart';
 
-final ProductRepository productRepository = ProductRepository();
+final SimpleProductRepository productRepository = SimpleProductRepository();
 
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
