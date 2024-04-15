@@ -11,7 +11,7 @@ void main() {
             maxWidth: 10,
             maxHeight: 20,
           ),
-          child: const ColoredBox(color: Colors.green),
+          child: const ColoredBox(color: Colors.red),
         ),
       ),
     ),
