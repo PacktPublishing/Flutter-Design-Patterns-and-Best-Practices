@@ -1,13 +1,9 @@
-class ProductRepository {
-  List<String> fetchProducts() {
-    // In a real app, this method would fetch data from a data source.
+import 'package:candy_store/product.dart';
 
-    return [
-      'Chocolate Bar',
-      'Gummy Bears',
-      'Jelly Beans',
-      'Lollipop',
-      'Caramel Chew',
-    ];
-  }
+abstract interface class ProductRepository {
+  Future<List<Product>> fetchProduct();
+
+  Future<Product> fetchProductById(int id);
+
+  Future<void> updateProduct(Product product);
 }
