@@ -8,35 +8,35 @@ import 'package:candy_store/main_page.dart';
 import 'package:candy_store/network_product_repository.dart';
 import 'package:candy_store/product_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 // At this point, all of the code is in the `lib` folder and we will structure it in Part 3
 Future<void> main() async {
-  final hiveService = HiveService();
-  final apiService = ApiService();
-  await hiveService.initializeHive();
+  await _setupDependencies();
   runApp(
-    MultiRepositoryProvider(
-      providers: [
-        RepositoryProvider<ProductRepository>(
-          create: (_) => AppProductRepository(
-            remoteDataSource: NetworkProductRepository(apiService),
-            localDataSource: LocalProductRepository(
-              hiveService.getProductBox(),
-            ),
-          ),
-        ),
-        RepositoryProvider<CartRepository>(
-          create: (_) => InMemoryCartRepository(),
-        ),
-      ],
-      child: MaterialApp(
-        title: 'Candy shop',
-        theme: ThemeData(
-          primarySwatch: Colors.lime,
-        ),
-        home: MainPage.withBloc(),
+    MaterialApp(
+      title: 'Candy shop',
+      theme: ThemeData(
+        primarySwatch: Colors.lime,
       ),
+      home: MainPage.withBloc(),
     ),
   );
+}
+
+Future<void> _setupDependencies() async {
+  final getIt = GetIt.instance;
+  getIt.registerLazySingleton<CartRepository>(() => InMemoryCartRepository());
+  getIt.registerSingletonAsync<ProductRepository>(() async {
+    final hiveService = HiveService();
+    final apiService = ApiService();
+    await hiveService.initializeHive();
+    return AppProductRepository(
+      remoteDataSource: NetworkProductRepository(apiService),
+      localDataSource: LocalProductRepository(
+        hiveService.getProductBox(),
+      ),
+    );
+  });
+  await getIt.allReady();
 }
