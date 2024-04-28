@@ -1,5 +1,5 @@
-import 'package:candy_store/cart_list_item.dart';
-import 'package:candy_store/product_list_item.dart';
+import 'package:candy_store/cart/domain/model/cart_list_item.dart';
+import 'package:candy_store/product/domain/model/product_list_item.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class CartEvent extends Equatable {

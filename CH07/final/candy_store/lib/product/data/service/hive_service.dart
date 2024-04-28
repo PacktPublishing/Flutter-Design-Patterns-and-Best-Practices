@@ -1,6 +1,5 @@
+import 'package:candy_store/product/domain/model/product.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
-import 'product.dart';
 
 class HiveService {
   Future<void> initializeHive() async {

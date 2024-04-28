@@ -1,5 +1,5 @@
-import 'package:candy_store/delayed_result.dart';
-import 'package:candy_store/product_list_item.dart';
+import 'package:candy_store/common/model/delayed_result.dart';
+import 'package:candy_store/product/domain/model/product_list_item.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductsState extends Equatable {

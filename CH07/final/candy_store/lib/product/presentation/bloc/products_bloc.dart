@@ -1,8 +1,8 @@
-import 'package:candy_store/delayed_result.dart';
-import 'package:candy_store/product_list_item.dart';
-import 'package:candy_store/product_repository.dart';
-import 'package:candy_store/products_bloc_event.dart';
-import 'package:candy_store/products_bloc_state.dart';
+import 'package:candy_store/common/model/delayed_result.dart';
+import 'package:candy_store/product/domain/model/product_list_item.dart';
+import 'package:candy_store/product/domain/repository/product_repository.dart';
+import 'package:candy_store/product/presentation/bloc/products_bloc_event.dart';
+import 'package:candy_store/product/presentation/bloc/products_bloc_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {

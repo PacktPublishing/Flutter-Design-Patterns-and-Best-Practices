@@ -1,7 +1,7 @@
-import 'package:candy_store/local_product_repository.dart';
-import 'package:candy_store/network_product_repository.dart';
-import 'package:candy_store/product.dart';
-import 'package:candy_store/product_repository.dart';
+import 'package:candy_store/product/data/repository/local_product_repository.dart';
+import 'package:candy_store/product/data/repository/network_product_repository.dart';
+import 'package:candy_store/product/domain/model/product.dart';
+import 'package:candy_store/product/domain/repository/product_repository.dart';
 
 class AppProductRepository implements ProductRepository {
   AppProductRepository({

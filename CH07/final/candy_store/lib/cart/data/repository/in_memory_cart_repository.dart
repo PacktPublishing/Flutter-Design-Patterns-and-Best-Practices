@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:candy_store/cart_info.dart';
-import 'package:candy_store/cart_list_item.dart';
-import 'package:candy_store/cart_repository.dart';
-import 'package:candy_store/product_list_item.dart';
+import 'package:candy_store/cart/domain/model/cart_info.dart';
+import 'package:candy_store/cart/domain/model/cart_list_item.dart';
+import 'package:candy_store/cart/domain/repository/cart_repository.dart';
+import 'package:candy_store/product/domain/model/product_list_item.dart';
 
 class InMemoryCartRepository implements CartRepository {
   CartInfo _cartInfo = CartInfo(
@@ -15,15 +15,15 @@ class InMemoryCartRepository implements CartRepository {
   CartInfo get cartInfo => _cartInfo;
 
   final StreamController<CartInfo> _cartInfoController =
-  StreamController<CartInfo>.broadcast();
+      StreamController<CartInfo>.broadcast();
 
   @override
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
 
   @override
   Future<CartInfo> get cartInfoFuture async => _cartInfo.copyWith(
-    items: Map.unmodifiable(_cartInfo.items),
-  );
+        items: Map.unmodifiable(_cartInfo.items),
+      );
 
   @override
   Future<void> addToCart(ProductListItem item) async {

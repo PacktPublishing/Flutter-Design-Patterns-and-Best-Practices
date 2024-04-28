@@ -1,4 +1,4 @@
-import 'package:candy_store/cart_list_item.dart';
+import 'package:candy_store/cart/domain/model/cart_list_item.dart';
 
 class CartInfo {
   Map<String, CartListItem> items;

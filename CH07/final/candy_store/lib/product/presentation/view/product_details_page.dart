@@ -1,4 +1,4 @@
-import 'package:candy_store/product_list_item.dart';
+import 'package:candy_store/product/domain/model/product_list_item.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetailsPage extends StatelessWidget {
