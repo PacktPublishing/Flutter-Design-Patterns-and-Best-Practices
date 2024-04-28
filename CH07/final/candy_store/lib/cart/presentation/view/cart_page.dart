@@ -1,7 +1,8 @@
 import 'package:candy_store/cart/presentation/bloc/cart_bloc.dart';
 import 'package:candy_store/cart/presentation/bloc/cart_event.dart';
-import 'package:candy_store/cart/presentation/bloc/cart_state.dart';
 import 'package:candy_store/cart/presentation/widget/cart_list_item_view.dart';
+import 'package:candy_store/cart/presentation/bloc/cart_state.dart';
+import 'package:candy_store/checkout/presentation/view/checkout_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,9 +48,10 @@ class _CartPageState extends State<CartPage> {
                 child: ListView.builder(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   itemCount: state.items.length,
-                  itemBuilder: (context, index) {
-                    final item = state.items.values.toList()[index];
-                    return CartListItemView(item: item);
+                  itemBuilder: (_, index) {
+                    return CartListItemView(
+                      item: state.items.values.toList()[index],
+                    );
                   },
                 ),
               ),
@@ -84,7 +86,7 @@ class _CartPageState extends State<CartPage> {
                             color: Colors.black,
                           ),
                         ),
-                      if (!state.loadingResult.isInProgress)
+                      if (!state.loadingResult.isInProgress) ...[
                         Text(
                           '${state.totalPrice} €',
                           style: const TextStyle(
@@ -93,6 +95,12 @@ class _CartPageState extends State<CartPage> {
                             color: Colors.black,
                           ),
                         ),
+                        IconButton(
+                          onPressed: _initCheckout,
+                          icon: const Icon(Icons.payment),
+                          color: Colors.black,
+                        ),
+                      ]
                     ],
                   ),
                 ),
@@ -100,6 +108,14 @@ class _CartPageState extends State<CartPage> {
             ],
           );
         },
+      ),
+    );
+  }
+
+  void _initCheckout() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => const CheckoutFlow(),
       ),
     );
   }
