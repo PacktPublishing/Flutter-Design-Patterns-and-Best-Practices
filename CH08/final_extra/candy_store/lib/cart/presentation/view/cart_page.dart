@@ -2,9 +2,12 @@ import 'package:candy_store/cart/presentation/bloc/cart_bloc.dart';
 import 'package:candy_store/cart/presentation/bloc/cart_event.dart';
 import 'package:candy_store/cart/presentation/widget/cart_list_item_view.dart';
 import 'package:candy_store/cart/presentation/bloc/cart_state.dart';
+import 'package:candy_store/checkout/data/repository/stub_checkout_repository.dart';
+import 'package:candy_store/checkout/domain/repository/checkout_repository.dart';
 import 'package:candy_store/checkout/presentation/view/checkout_flow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -112,11 +115,20 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void _initCheckout() {
-    Navigator.of(context).push(
+  Future<void> _initCheckout() async {
+    GetIt.instance.pushNewScope(
+      scopeName: 'checkout',
+      init: (scope) {
+        scope.registerSingleton<CheckoutRepository>(
+          StubCheckoutRepository(),
+        );
+      },
+    );
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => const CheckoutFlow(),
       ),
     );
+    GetIt.instance.popScope();
   }
 }

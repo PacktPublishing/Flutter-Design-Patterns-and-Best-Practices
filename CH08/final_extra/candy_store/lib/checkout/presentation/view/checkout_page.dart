@@ -2,6 +2,7 @@ import 'package:candy_store/checkout/presentation/bloc/checkout_cubit.dart';
 import 'package:candy_store/checkout/presentation/bloc/checkout_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class CheckoutPage extends StatefulWidget {
   const CheckoutPage({super.key});
@@ -12,7 +13,7 @@ class CheckoutPage extends StatefulWidget {
   static Widget withBloc() {
     return BlocProvider<CheckoutCubit>(
       create: (context) => CheckoutCubit(
-        context.read(),
+        GetIt.I.get(),
       )..loadPaymentMethods(),
       child: const CheckoutPage(),
     );

@@ -1,7 +1,11 @@
-import 'package:candy_store/cart/cart.dart';
-import 'package:candy_store/product/product.dart';
+import 'package:candy_store/cart_bloc.dart';
+import 'package:candy_store/cart_button.dart';
+import 'package:candy_store/cart_event.dart';
+import 'package:candy_store/cart_page.dart';
+import 'package:candy_store/products_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,7 +16,7 @@ class MainPage extends StatefulWidget {
   static Widget withBloc() {
     return BlocProvider<CartBloc>(
       create: (context) => CartBloc(
-        cartRepository: context.read(),
+        cartRepository: GetIt.I.get(),
       )..add(const Load()),
       child: const MainPage(),
     );

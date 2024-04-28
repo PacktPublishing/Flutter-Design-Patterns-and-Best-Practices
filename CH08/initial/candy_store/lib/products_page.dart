@@ -1,5 +1,3 @@
-import 'package:candy_store/cart_bloc.dart';
-import 'package:candy_store/cart_event.dart';
 import 'package:candy_store/product_list_item_view.dart';
 import 'package:candy_store/products_bloc.dart';
 import 'package:candy_store/products_bloc_event.dart';
@@ -12,11 +10,10 @@ class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => ProductsBloc(
-              productRepository: context.read(),
-            )..add(
-                const FetchProducts(),
-              ),
+        create: (context) => ProductsBloc()
+          ..add(
+            const FetchProducts(),
+          ),
         child: _ProductsView());
   }
 }
@@ -34,12 +31,7 @@ class _ProductsView extends StatelessWidget {
         itemCount: items.length,
         itemBuilder: (context, index) {
           final item = items[index];
-          return ProductListItemView(
-            item: item,
-            onAddToCart: (item) {
-              context.read<CartBloc>().add(AddItem(item));
-            },
-          );
+          return ProductListItemView(item: item);
         },
       ),
     );

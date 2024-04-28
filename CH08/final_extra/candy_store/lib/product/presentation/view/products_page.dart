@@ -5,6 +5,7 @@ import 'package:candy_store/product/presentation/bloc/products_bloc_event.dart';
 import 'package:candy_store/product/presentation/widget/product_list_item_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 class ProductsPage extends StatelessWidget {
   const ProductsPage({super.key});
@@ -13,7 +14,7 @@ class ProductsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) => ProductsBloc(
-              productRepository: context.read(),
+              productRepository: GetIt.I.get(),
             )..add(
                 const FetchProducts(),
               ),

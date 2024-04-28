@@ -10,13 +10,6 @@ class CartPage extends StatefulWidget {
 
   @override
   State<CartPage> createState() => _CartPageState();
-
-  static Widget withBloc() {
-    return BlocProvider<CartBloc>(
-      create: (context) => CartBloc(),
-      child: const CartPage(),
-    );
-  }
 }
 
 class _CartPageState extends State<CartPage> {

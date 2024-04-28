@@ -1,8 +1,5 @@
-import 'package:candy_store/cart_bloc.dart';
-import 'package:candy_store/cart_button.dart';
-import 'package:candy_store/cart_event.dart';
-import 'package:candy_store/cart_page.dart';
-import 'package:candy_store/products_page.dart';
+import 'package:candy_store/cart/cart.dart';
+import 'package:candy_store/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
