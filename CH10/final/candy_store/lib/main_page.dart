@@ -32,7 +32,7 @@ class _MainPageState extends State<MainPage> {
           right: 16,
           bottom: 16,
           child: GestureDetector(
-            onTap: openCart,
+            onTap: _openCart,
             child: CartButton(
               count: totalItemsCount,
             ),
@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  void openCart() {
+  void _openCart() {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => BlocProvider.value(

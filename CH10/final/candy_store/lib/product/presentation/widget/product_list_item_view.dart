@@ -1,15 +1,16 @@
+import 'package:candy_store/cart/presentation/bloc/cart_bloc.dart';
+import 'package:candy_store/cart/presentation/bloc/cart_event.dart';
 import 'package:candy_store/product/domain/model/product_list_item.dart';
 import 'package:candy_store/product/presentation/view/product_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListItemView extends StatelessWidget {
   final ProductListItem item;
-  final Function(ProductListItem item) onAddToCart;
 
   const ProductListItemView({
     super.key,
     required this.item,
-    required this.onAddToCart,
   });
 
   @override
@@ -18,9 +19,9 @@ class ProductListItemView extends StatelessWidget {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => ProductDetailsPage(
-              product: item,
-              onAddToCart: onAddToCart,
+            builder: (_) => ProductDetailsPage.withBloc(
+              item,
+              (item) => _onAddToCart(context, item),
             ),
           ),
         );
@@ -75,7 +76,7 @@ class ProductListItemView extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
-                  onTap: () => onAddToCart(item),
+                  onTap: () => _onAddToCart(context, item),
                   child: Icon(
                     Icons.add,
                     size: 24,
@@ -88,5 +89,9 @@ class ProductListItemView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _onAddToCart(BuildContext context, ProductListItem item) {
+    context.read<CartBloc>().add(AddItem(item));
   }
 }

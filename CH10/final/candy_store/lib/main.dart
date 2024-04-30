@@ -1,4 +1,6 @@
 import 'package:candy_store/cart/cart.dart';
+import 'package:candy_store/faves/data/repository/in_memory_faves_repository.dart';
+import 'package:candy_store/faves/domain/repository/faves_repository.dart';
 import 'package:candy_store/main_page.dart';
 import 'package:candy_store/product/product.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,9 @@ Future<void> main() async {
         ),
         RepositoryProvider<CartRepository>(
           create: (_) => InMemoryCartRepository(),
+        ),
+        RepositoryProvider<FavesRepository>(
+          create: (_) => InMemoryFavesRepository(),
         ),
       ],
       child: MaterialApp(

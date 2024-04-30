@@ -1,5 +1,4 @@
-import 'package:candy_store/cart/presentation/bloc/cart_bloc.dart';
-import 'package:candy_store/cart/presentation/bloc/cart_event.dart';
+import 'package:candy_store/faves/presentation/view/faves_page.dart';
 import 'package:candy_store/product/presentation/bloc/products_bloc.dart';
 import 'package:candy_store/product/presentation/bloc/products_bloc_event.dart';
 import 'package:candy_store/product/presentation/widget/product_list_item_view.dart';
@@ -32,6 +31,12 @@ class _ProductsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products'),
+        actions: [
+          IconButton(
+            onPressed: () => _openFavourites(context),
+            icon: const Icon(Icons.favorite),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -57,16 +62,19 @@ class _ProductsView extends StatelessWidget {
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
-                  return ProductListItemView(
-                    item: item,
-                    onAddToCart: (item) {
-                      context.read<CartBloc>().add(AddItem(item));
-                    },
-                  );
+                  return ProductListItemView(item: item);
                 },
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  void _openFavourites(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => FavesPage.withBloc(),
       ),
     );
   }
