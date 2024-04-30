@@ -1,4 +1,5 @@
 import 'package:candy_store/cart/cart.dart';
+import 'package:candy_store/faves/data/api/local_storage_api.g.dart';
 import 'package:candy_store/faves/data/repository/local_faves_repository.dart';
 import 'package:candy_store/faves/domain/repository/faves_repository.dart';
 import 'package:candy_store/main_page.dart';
@@ -25,7 +26,9 @@ Future<void> main() async {
           create: (_) => InMemoryCartRepository(),
         ),
         RepositoryProvider<FavesRepository>(
-          create: (_) => LocalFavesRepository(),
+          create: (_) => LocalFavesRepository(
+            api: LocalStorageApi(),
+          ),
         ),
       ],
       child: MaterialApp(

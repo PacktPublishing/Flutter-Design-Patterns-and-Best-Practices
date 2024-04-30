@@ -4,73 +4,32 @@ import android.content.Context
 import android.content.SharedPreferences
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.plugin.common.MethodChannel
 
-class MainActivity : FlutterActivity() {
+class MainActivity : FlutterActivity(), LocalStorageApi {
+
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
-        val favesMethodChannel = MethodChannel(
-            flutterEngine.dartExecutor.binaryMessenger,
-            "com.example.candy_store/faves"
-        )
-        favesMethodChannel.setMethodCallHandler { call, result ->
-            when (call.method) {
-                "getFaves" -> {
-                    val faves = getFaves()
-                    result.success(faves)
-                }
-
-                "addFave" -> {
-                    val id = call.argument<String>("id")
-                    if (id == null) {
-                        result.error("INVALID_VALUE", "id is null", null)
-                    } else {
-                        toggleFavorite(id, true)
-                        result.success(null)
-                    }
-                }
-
-                "removeFave" -> {
-                    val id = call.argument<String>("id")
-                    if (id == null) {
-                        result.error("INVALID_VALUE", "id is null", null)
-                    } else {
-                        toggleFavorite(id, false)
-                        result.success(null)
-                    }
-                }
-
-                "isFave" -> {
-                    val id = call.argument<String>("id")
-                    if (id == null) {
-                        result.error("INVALID_VALUE", "id is null", null)
-                    } else {
-                        val isFave = isFave(id)
-                        result.success(isFave)
-                    }
-                }
-
-                else -> {
-                    result.notImplemented()
-                }
-            }
-        }
+        LocalStorageApi.setUp(flutterEngine.dartExecutor.binaryMessenger, this)
     }
 
-    private fun getSharedPreferences(): SharedPreferences {
-        return applicationContext.getSharedPreferences("faves", Context.MODE_PRIVATE)
-    }
-
-    private fun getFaves(): List<String> {
+    override fun getFaves(): List<FaveProduct> {
         val preferences = getSharedPreferences()
         val faves = preferences.getStringSet("faves", HashSet()) ?: HashSet()
-        return faves.toList()
+        return faves.map { FaveProduct(id = it) }
     }
 
-    private fun isFave(id: String): Boolean {
+    override fun isFave(id: String): Boolean {
         val preferences = getSharedPreferences()
         val faves = preferences.getStringSet("faves", HashSet()) ?: HashSet()
         return faves.contains(id)
+    }
+
+    override fun addFave(id: String) {
+        toggleFavorite(id, true)
+    }
+
+    override fun removeFave(id: String) {
+        toggleFavorite(id, false)
     }
 
     private fun toggleFavorite(id: String, isFavorite: Boolean) {
@@ -84,5 +43,9 @@ class MainActivity : FlutterActivity() {
             allFaves.remove(id)
         }
         preferences.edit().putStringSet("faves", allFaves).apply()
+    }
+
+    private fun getSharedPreferences(): SharedPreferences {
+        return applicationContext.getSharedPreferences("faves", Context.MODE_PRIVATE)
     }
 }
