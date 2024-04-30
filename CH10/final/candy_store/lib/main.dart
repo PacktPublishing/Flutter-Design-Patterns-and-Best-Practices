@@ -29,6 +29,8 @@ Future<void> main() async {
         ),
       ],
       child: MaterialApp(
+        // On web the "fave" icon is hidden due to banner, this is done for convenience
+        debugShowCheckedModeBanner: false,
         title: 'Candy shop',
         theme: ThemeData(
           primarySwatch: Colors.lime,
