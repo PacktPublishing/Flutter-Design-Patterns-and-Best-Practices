@@ -1,10 +1,9 @@
-import 'dart:isolate';
-
 import 'package:candy_store/product/data/repository/local_product_repository.dart';
 import 'package:candy_store/product/data/repository/network_product_repository.dart';
 import 'package:candy_store/product/domain/model/product.dart';
 import 'package:candy_store/product/domain/repository/fake_search_data.dart';
 import 'package:candy_store/product/domain/repository/product_repository.dart';
+import 'package:flutter/foundation.dart';
 
 class AppProductRepository implements ProductRepository {
   AppProductRepository({
@@ -38,7 +37,7 @@ class AppProductRepository implements ProductRepository {
     if (query.isEmpty) {
       return allProducts;
     }
-    final results = await Isolate.run(() => _search(query));
+    final results = await compute(_search, query);
     return results;
   }
 
