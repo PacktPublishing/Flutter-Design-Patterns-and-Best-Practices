@@ -50,7 +50,7 @@ class _ProductsView extends StatelessWidget {
           const SizedBox(height: 16),
           if (progress) const CircularProgressIndicator(),
           if (items.isEmpty && !progress) const Text('No items found'),
-          if (items.isNotEmpty)
+          if (!progress)
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(vertical: 16),

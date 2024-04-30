@@ -1,3 +1,5 @@
+import 'dart:isolate';
+
 import 'package:candy_store/product/data/repository/local_product_repository.dart';
 import 'package:candy_store/product/data/repository/network_product_repository.dart';
 import 'package:candy_store/product/domain/model/product.dart';
@@ -32,11 +34,17 @@ class AppProductRepository implements ProductRepository {
 
   @override
   Future<List<Product>> searchProducts(String query) async {
-    final products = fakeSearchData;
+    final allProducts = fakeSearchData;
     if (query.isEmpty) {
-      return products;
+      return allProducts;
     }
-    final results = products.where((product) {
+    final results = await Isolate.run(() => _search(query));
+    return results;
+  }
+
+  static List<Product> _search(String query) {
+    final products = fakeSearchData;
+    final filtered = products.where((product) {
       if (product.name.toLowerCase().contains(query.toLowerCase())) {
         return true;
       }
@@ -50,10 +58,10 @@ class AppProductRepository implements ProductRepository {
       );
       return nameDistance <= 3 || descriptionDistance <= 3;
     }).toList();
-    return results;
+    return filtered;
   }
 
-  int _levenshteinDistance(String a, String b) {
+  static int _levenshteinDistance(String a, String b) {
     if (a == b) {
       return 0;
     }
@@ -65,7 +73,7 @@ class AppProductRepository implements ProductRepository {
     }
 
     List<List<int>> matrix = List.generate(b.length + 1,
-            (i) => List.generate(a.length + 1, (j) => j, growable: false),
+        (i) => List.generate(a.length + 1, (j) => j, growable: false),
         growable: false);
 
     for (int i = 1; i <= b.length; i++) {
@@ -86,7 +94,7 @@ class AppProductRepository implements ProductRepository {
     return matrix[b.length][a.length];
   }
 
-  int _min(int a, int b, int c) {
+  static int _min(int a, int b, int c) {
     return (a < b) ? (a < c ? a : c) : (b < c ? b : c);
   }
 }
