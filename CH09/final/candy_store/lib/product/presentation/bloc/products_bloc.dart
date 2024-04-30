@@ -13,6 +13,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   })  : _productRepository = productRepository,
         super(const ProductsState()) {
     on<FetchProducts>(_onFetchProducts);
+    on<SearchProducts>(_onSearchProducts);
   }
 
   Future<void> _onFetchProducts(
@@ -34,6 +35,34 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
                   imageUrl: p.imageUrl,
                 ),
               )
+              .toList(),
+        ),
+      );
+      emit(state.copyWith(loadingResult: const DelayedResult.none()));
+    } on Exception catch (ex) {
+      emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
+    }
+  }
+
+  Future<void> _onSearchProducts(
+      SearchProducts event,
+      Emitter<ProductsState> emit,
+      ) async {
+    try {
+      emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
+      final products = await _productRepository.searchProducts(event.query);
+      emit(
+        state.copyWith(
+          items: products
+              .map(
+                (p) => ProductListItem(
+              id: p.id,
+              name: p.name,
+              description: p.description,
+              price: p.price,
+              imageUrl: p.imageUrl,
+            ),
+          )
               .toList(),
         ),
       );

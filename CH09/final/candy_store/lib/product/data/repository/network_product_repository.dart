@@ -11,4 +11,10 @@ class NetworkProductRepository implements ProductRepository {
   Future<List<Product>> fetchProducts() async {
     return _apiService.fetchProducts();
   }
+
+  @override
+  Future<List<Product>> searchProducts(String query) {
+    // TODO: implement searchProducts
+    throw UnimplementedError();
+  }
 }
