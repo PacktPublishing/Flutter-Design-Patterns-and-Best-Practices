@@ -1,25 +1,25 @@
 void main() async {
   print("Before");
 
-  printWithZeroDelay()
+  printWith1msDelay()
       .then(
-    (_) => printWithOneSecondDelay().catchError(
+    (_) => printWith1SecondDelay().catchError(
       (ex, st) {
-        print("Handle error thrown by printWithOneSecondDelay()");
+        print("Handle error thrown by printWith1SecondDelay()");
       },
     ),
   )
       .catchError((ex, st) {
-    print("Handle error thrown by printWithZeroDelay()");
+    print("Handle error thrown by printWith1msDelay()");
   });
 }
 
-Future<void> printWithZeroDelay() async {
-  await Future.delayed(Duration.zero);
-  print("Print with zero delay");
+Future<void> printWith1msDelay() async {
+  await Future.delayed(const Duration(milliseconds: 1));
+  print("Print with 1 ms delay");
 }
 
-Future<void> printWithOneSecondDelay() async {
-  await Future.delayed(Duration(seconds: 1));
-  print("Print with one second delay");
+Future<void> printWith1SecondDelay() async {
+  await Future.delayed(const Duration(seconds: 1));
+  print("Print with 1 second delay");
 }
