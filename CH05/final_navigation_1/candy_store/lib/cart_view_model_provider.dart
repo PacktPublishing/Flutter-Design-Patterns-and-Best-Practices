@@ -21,8 +21,7 @@ class CartViewModelProvider extends InheritedWidget {
   }
 
   static CartViewModel read(BuildContext context) {
-    final provider =
-    context.getInheritedWidgetOfExactType<CartViewModelProvider>();
+    final provider = context.getInheritedWidgetOfExactType<CartViewModelProvider>();
 
     if (provider == null) {
       throw Exception('No CartViewModelProvider found in context');

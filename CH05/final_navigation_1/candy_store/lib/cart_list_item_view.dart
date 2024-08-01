@@ -56,9 +56,8 @@ class CartListItemView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          onPressed: cartBloc.state.loadingResult.isInProgress
-                              ? null
-                              : () => cartBloc.add(RemoveItem(item)),
+                          onPressed:
+                              cartBloc.state.loadingResult.isInProgress ? null : () => cartBloc.add(RemoveItem(item)),
                           icon: Icon(
                             Icons.remove,
                             color: Theme.of(context).colorScheme.secondary,

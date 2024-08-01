@@ -1,6 +1,5 @@
 import 'package:candy_store/cart_button.dart';
 import 'package:candy_store/cart_view_model_provider.dart';
-import 'package:candy_store/cart_page.dart';
 import 'package:candy_store/products_page.dart';
 import 'package:flutter/material.dart';
 
