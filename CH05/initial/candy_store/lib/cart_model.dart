@@ -11,7 +11,7 @@ class CartModel {
 
   factory CartModel() => _instance;
 
-  CartInfo _cartInfo = CartInfo(
+  final CartInfo _cartInfo = CartInfo(
     items: {},
     totalPrice: 0,
     totalItems: 0,
@@ -19,14 +19,13 @@ class CartModel {
 
   CartInfo get cartInfo => _cartInfo;
 
-  final StreamController<CartInfo> _cartInfoController =
-      StreamController<CartInfo>.broadcast();
+  final StreamController<CartInfo> _cartInfoController = StreamController<CartInfo>.broadcast();
 
   Stream<CartInfo> get cartInfoStream => _cartInfoController.stream;
 
   Future<CartInfo> get cartInfoFuture async => _cartInfo.copyWith(
-    items: Map.unmodifiable(_cartInfo.items),
-  );
+        items: Map.unmodifiable(_cartInfo.items),
+      );
 
   Future<void> addToCart(ProductListItem item) async {
     await Future.delayed(const Duration(seconds: 3));
