@@ -32,19 +32,67 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CheckoutCubit, CheckoutState>(builder: (context, state) {
-      return Scaffold(
-        body: Center(
-          child: TextButton(
-            onPressed: _checkout,
-            child: const Text('Checkout'),
+      if (state.checkoutResult.isInProgress) {
+        return Scaffold(
+          appBar: AppBar(title: const Text('Checkout')),
+          body: const Center(child: CircularProgressIndicator()),
+        );
+      } else {
+        return Scaffold(
+          appBar: AppBar(title: const Text('Checkout')),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Select Payment Method:',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+                const SizedBox(height: 16),
+                ...state.paymentMethods.map(
+                      (method) => Card(
+                    elevation: 4,
+                    margin: const EdgeInsets.symmetric(vertical: 8),
+                    child: ListTile(
+                      title: Text(method),
+                      leading: Radio(
+                        value: method,
+                        groupValue: state.selectedPaymentMethod,
+                        onChanged: (value) {
+                          setState(() {
+                            _cubit.selectPaymentMethod(value as String);
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: state.selectedPaymentMethod != 'none'
+                        ? _checkout
+                        : null,
+                    child: const Text('Checkout'),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      }
     });
   }
 
   void _checkout() {
-    final paymentMethod = _cubit.state.paymentMethods.firstOrNull ?? 'Unknown';
+    final paymentMethod = _cubit.state.selectedPaymentMethod;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Checked out with $paymentMethod'),
+      ),
+    );
     _cubit.checkout(paymentMethod);
     Navigator.pop(context);
   }

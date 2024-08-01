@@ -1,8 +1,8 @@
 void main() async {
   print("Before");
   try {
-    await printWithZeroDelay();
-    await printWithOneSecondDelay();
+    await printWith1msDelay();
+    await printWith1SecondDelay();
   } on ImportantException catch (ex, st) {
     print("An important exception was thrown");
   } on UnimportantException catch (ex, st) {
@@ -10,14 +10,15 @@ void main() async {
   }
 }
 
-Future<void> printWithZeroDelay() async {
-  await Future.delayed(Duration.zero);
+Future<void> printWith1msDelay() async {
+  await Future.delayed(const Duration(milliseconds: 1));
+  print("Print with 1 ms delay");
   throw UnimportantException();
 }
 
-Future<void> printWithOneSecondDelay() async {
-  await Future.delayed(Duration(seconds: 1));
-  print("Print with one second delay");
+Future<void> printWith1SecondDelay() async {
+  await Future.delayed(const Duration(seconds: 1));
+  print("Print with 1 second delay");
   throw ImportantException();
 }
 

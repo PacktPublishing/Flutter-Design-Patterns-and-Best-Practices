@@ -23,7 +23,7 @@ class ProgressWidget extends StatelessWidget {
 
   Future<void> _block() async {
     for (int i = 0; i < 1000000; i++) {
-      await Future.delayed(Duration.zero);
+      await Future.delayed(const Duration(milliseconds: 1));
       print('$i');
     }
   }

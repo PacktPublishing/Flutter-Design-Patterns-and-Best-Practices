@@ -1,10 +1,10 @@
 void main() {
   print("Before");
-  printWithZeroDelay()
+  printWith1msDelay()
       .then((_) => print("After"));
 }
 
-Future<void> printWithZeroDelay() async {
-  await Future.delayed(Duration.zero);
-  print("Print with zero delay");
+Future<void> printWith1msDelay() async {
+  await Future.delayed(const Duration(milliseconds: 1));
+  print("Print with 1ms delay");
 }
