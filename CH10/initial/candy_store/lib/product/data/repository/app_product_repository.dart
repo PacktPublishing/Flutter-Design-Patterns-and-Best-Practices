@@ -1,7 +1,7 @@
 import 'package:candy_store/product/data/repository/local_product_repository.dart';
 import 'package:candy_store/product/data/repository/network_product_repository.dart';
 import 'package:candy_store/product/domain/model/product.dart';
-import 'package:candy_store/product/domain/repository/products_data.dart';
+import 'package:candy_store/product/domain/repository/fake_search_data.dart';
 import 'package:candy_store/product/domain/repository/product_repository.dart';
 import 'package:flutter/foundation.dart';
 
