@@ -1,4 +1,3 @@
-
 import 'package:candy_store/checkout/domain/repository/checkout_repository.dart';
 import 'package:candy_store/checkout/presentation/bloc/checkout_state.dart';
 import 'package:candy_store/common/model/delayed_result.dart';
@@ -13,6 +12,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
     const CheckoutState(
       paymentMethods: [],
       checkoutResult: DelayedResult.none(),
+      selectedPaymentMethod: 'none',
     ),
   );
 
@@ -32,5 +32,9 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       }
       emit(state.copyWith(checkoutResult: DelayedResult.fromError(ex)));
     }
+  }
+
+  void selectPaymentMethod(String paymentMethod) {
+    emit(state.copyWith(selectedPaymentMethod: paymentMethod));
   }
 }
