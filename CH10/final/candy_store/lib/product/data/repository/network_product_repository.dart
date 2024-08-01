@@ -8,7 +8,7 @@ class NetworkProductRepository implements ProductRepository {
   final ApiService _apiService;
 
   @override
-  Future<List<Product>> fetchProducts() async {
+  Future<List<Product>> fetchProducts() {
     return _apiService.fetchProducts();
   }
 
