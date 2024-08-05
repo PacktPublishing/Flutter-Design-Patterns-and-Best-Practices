@@ -37,7 +37,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
               .toList(),
         ),
       );
-      emit(state.copyWith(loadingResult: const DelayedResult.none()));
+      emit(state.copyWith(loadingResult: const DelayedResult.idle()));
     } on Exception catch (ex) {
       emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }

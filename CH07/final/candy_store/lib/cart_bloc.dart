@@ -17,7 +17,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             items: {},
             totalPrice: 0,
             totalItems: 0,
-            loadingResult: DelayedResult.none(),
+            loadingResult: DelayedResult.idle(),
           ),
         ) {
     on<Load>(_onLoad);
@@ -38,7 +38,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           totalItems: cartInfo.totalItems,
         ),
       );
-      emit(state.copyWith(loadingResult: const DelayedResult.none()));
+      emit(state.copyWith(loadingResult: const DelayedResult.idle()));
       await emit.onEach(
         _cartRepository.cartInfoStream,
         onData: (CartInfo cartInfo) {
@@ -65,7 +65,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
       await _cartRepository.addToCart(event.item);
-      emit(state.copyWith(loadingResult: const DelayedResult.none()));
+      emit(state.copyWith(loadingResult: const DelayedResult.idle()));
     } on Exception catch (ex) {
       emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }
@@ -75,14 +75,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       emit(state.copyWith(loadingResult: const DelayedResult.inProgress()));
       await _cartRepository.removeFromCart(event.item);
-      emit(state.copyWith(loadingResult: const DelayedResult.none()));
+      emit(state.copyWith(loadingResult: const DelayedResult.idle()));
     } on Exception catch (ex) {
       emit(state.copyWith(loadingResult: DelayedResult.fromError(ex)));
     }
   }
 
   void _onClearError(ClearError event, Emitter emit) {
-    emit(state.copyWith(loadingResult: const DelayedResult.none()));
+    emit(state.copyWith(loadingResult: const DelayedResult.idle()));
   }
 
 /*  @override

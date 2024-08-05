@@ -11,7 +11,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       : super(
     const CheckoutState(
       paymentMethods: [],
-      checkoutResult: DelayedResult.none(),
+      checkoutResult: DelayedResult.idle(),
       selectedPaymentMethod: 'none',
     ),
   );

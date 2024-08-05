@@ -25,7 +25,7 @@ class CartViewModel extends ChangeNotifier {
     items: {},
     totalPrice: 0,
     totalItems: 0,
-    loadingResult: DelayedResult.none(),
+    loadingResult: DelayedResult.idle(),
   );
 
   CartState get state => _state;
@@ -35,7 +35,7 @@ class CartViewModel extends ChangeNotifier {
       _state = _state.copyWith(loadingResult: const DelayedResult.inProgress());
       notifyListeners();
       await _cartModel.addToCart(item);
-      _state = _state.copyWith(loadingResult: const DelayedResult.none());
+      _state = _state.copyWith(loadingResult: const DelayedResult.idle());
     } on Exception catch (ex) {
       _state = _state.copyWith(loadingResult: DelayedResult.fromError(ex));
     }
@@ -47,7 +47,7 @@ class CartViewModel extends ChangeNotifier {
       _state = _state.copyWith(loadingResult: const DelayedResult.inProgress());
       notifyListeners();
       await _cartModel.removeFromCart(item);
-      _state = _state.copyWith(loadingResult: const DelayedResult.none());
+      _state = _state.copyWith(loadingResult: const DelayedResult.idle());
     } on Exception catch (ex) {
       _state = _state.copyWith(loadingResult: DelayedResult.fromError(ex));
     }
@@ -55,7 +55,7 @@ class CartViewModel extends ChangeNotifier {
   }
 
   void clearError() {
-    _state = _state.copyWith(loadingResult: const DelayedResult.none());
+    _state = _state.copyWith(loadingResult: const DelayedResult.idle());
     notifyListeners();
   }
 

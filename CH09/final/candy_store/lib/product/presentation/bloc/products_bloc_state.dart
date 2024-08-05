@@ -7,7 +7,7 @@ class ProductsState extends Equatable {
   final DelayedResult<void> loadingResult;
 
   const ProductsState({
-    this.loadingResult = const DelayedResult.none(),
+    this.loadingResult = const DelayedResult.idle(),
     this.items = const [],
   });
 

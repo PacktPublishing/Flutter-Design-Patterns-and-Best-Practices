@@ -20,7 +20,7 @@ class DelayedResult<T> extends Equatable {
         error = null,
         isInProgress = true;
 
-  const DelayedResult.none()
+  const DelayedResult.idle()
       : value = null,
         error = null,
         isInProgress = false;
@@ -29,7 +29,7 @@ class DelayedResult<T> extends Equatable {
 
   bool get isError => error != null;
 
-  bool get isNone => value == null && error == null && !isInProgress;
+  bool get isIdle => value == null && error == null && !isInProgress;
 
   @override
   List<Object?> get props => [value, error, isInProgress];
