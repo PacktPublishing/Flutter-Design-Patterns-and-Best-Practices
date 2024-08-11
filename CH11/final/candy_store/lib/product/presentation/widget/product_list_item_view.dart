@@ -7,10 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductListItemView extends StatelessWidget {
   final ProductListItem item;
+  final bool forTest;
 
   const ProductListItemView({
     super.key,
     required this.item,
+    this.forTest = false,
   });
 
   @override
@@ -35,7 +37,7 @@ class ProductListItemView extends StatelessWidget {
               child: SizedBox(
                 width: 72,
                 height: 72,
-                child: Image.asset(item.imageUrl),
+                child: forTest ? const Placeholder() : Image.asset(item.imageUrl),
               ),
             ),
             Expanded(
