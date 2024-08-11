@@ -45,6 +45,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.9
   golden_toolkit: ^0.15.0
+  mockito: ^5.4.4
   pigeon: ^18.0.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
