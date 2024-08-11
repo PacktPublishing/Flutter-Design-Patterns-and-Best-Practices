@@ -45,6 +45,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.4.9
   pigeon: ^18.0.0
+  golden_toolkit: ^0.15.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
