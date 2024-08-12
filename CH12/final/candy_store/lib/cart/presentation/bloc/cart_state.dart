@@ -13,7 +13,8 @@ class CartState extends Equatable {
     required this.totalPrice,
     required this.totalItems,
     required this.loadingResult,
-  });
+  })  : assert(totalPrice >= 0),
+        assert(totalItems >= 0);
 
   CartState copyWith({
     Map<String, CartListItem>? items,
