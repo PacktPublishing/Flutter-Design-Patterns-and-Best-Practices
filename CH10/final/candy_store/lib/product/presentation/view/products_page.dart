@@ -1,4 +1,3 @@
-import 'package:candy_store/faves/presentation/view/faves_page.dart';
 import 'package:candy_store/product/presentation/bloc/products_bloc.dart';
 import 'package:candy_store/product/presentation/bloc/products_bloc_event.dart';
 import 'package:candy_store/product/presentation/widget/product_list_item_view.dart';
@@ -6,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({super.key});
+  const ProductsPage({super.key, required this.onFavesTap});
+
+  final VoidCallback onFavesTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,16 @@ class ProductsPage extends StatelessWidget {
       )..add(
           const FetchProducts(),
         ),
-      child: _ProductsView(),
+      child: _ProductsView(onFavesTap: onFavesTap),
     );
   }
 }
 
 class _ProductsView extends StatelessWidget {
+  const _ProductsView({required this.onFavesTap});
+
+  final VoidCallback onFavesTap;
+
   @override
   Widget build(BuildContext context) {
     final items = context.select((ProductsBloc bloc) => bloc.state.items);
@@ -33,7 +38,7 @@ class _ProductsView extends StatelessWidget {
         title: const Text('Products'),
         actions: [
           IconButton(
-            onPressed: () => _openFavourites(context),
+            onPressed: onFavesTap,
             icon: const Icon(Icons.favorite),
           ),
         ],
@@ -67,14 +72,6 @@ class _ProductsView extends StatelessWidget {
               ),
             ),
         ],
-      ),
-    );
-  }
-
-  void _openFavourites(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => FavesPage.withBloc(),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:candy_store/cart/cart.dart';
+import 'package:candy_store/faves/presentation/view/faves_page.dart';
 import 'package:candy_store/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,9 @@ class _MainPageState extends State<MainPage> {
 
     return Stack(
       children: [
-        const ProductsPage(),
+        ProductsPage(
+          onFavesTap: _openFaves,
+        ),
         Positioned(
           right: 16,
           bottom: 16,
@@ -48,6 +51,17 @@ class _MainPageState extends State<MainPage> {
         builder: (_) => BlocProvider.value(
           value: context.read<CartBloc>(),
           child: const CartPage(),
+        ),
+      ),
+    );
+  }
+
+  void _openFaves() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: context.read<CartBloc>(),
+          child: FavesPage.withBloc(),
         ),
       ),
     );
