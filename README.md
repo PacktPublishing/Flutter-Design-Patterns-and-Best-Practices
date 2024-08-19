@@ -54,11 +54,11 @@ With the following software and hardware list you can run all code files present
 
 
 ## Related products <Other books you may enjoy>
-* ​​Flutter Cookbook, Second Edition​  [[Packt]](https://www.packtpub.com/product/flutter-cookbook-second-edition-9781803245430) [[Amazon]](https://www.amazon.com/dp/1803245433 )
+* ​​Flutter Cookbook, Second Edition​  [[Packt]](https://www.packtpub.com/en-us/product/flutter-cookbook-second-edition-9781803245430)) [[Amazon]](https://www.amazon.com/dp/1803245433 )
 
-* ​​Flutter for Beginners​  [[Packt]](https://www.packtpub.com/en-in/product/flutter-for-beginners-9781837630387) [[Amazon]](https://www.amazon.com/dp/1837630380 )
+* ​​Flutter for Beginners​  [[Packt]](https://www.packtpub.com/en-us/product/flutter-for-beginners-9781837630387)) [[Amazon]](https://www.amazon.com/dp/1837630380 )
 
-## Get to Know the Author
+## Get to Know the Authors
 **Daria Orlova** is a mobile app specialist, who started with native Android in 2015 and discovered Flutter in 2019. She is the co-founder of BBapps, creating "apps that care for you and the planet." Previously, at Chili Labs, the top mobile agency in the Baltics, together with the team, she delivered 50+ projects, winning awards including RedDot and W3. Daria is an active community member &ndash; a Google Developer Expert (GDE) in Flutter and Dart, Flutterista, and WTM ambassador, mentor, technical writer, and public speaker who is passionate about quality tech education. She holds a B.Sc. in computer science.
 
 **Esra Kadah** is a senior app developer specializing in Flutter, with a passion for integrating programming, UI/UX design, and psychology. She enjoys building and contributing to thriving communities. She is a co-organizer of Flutteristas, Flutter Berlin, and CMX Istanbul, and serves as a Women Techmakers Ambassador. She has delivered over 60 talks, organized more than 150 events, and hosted 40+ streams, collaborating with Google Developer Groups, Google Developer Student Clubs, the Flutter community, Flutteristas, and Women Techmakers.
