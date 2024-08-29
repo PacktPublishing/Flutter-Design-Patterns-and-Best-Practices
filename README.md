@@ -47,10 +47,10 @@ With the following software and hardware list you can run all code files present
 
 ## Software and Hardware List
 
-| Chapter  | Software required               | OS required                      |
-| -------- | --------------------------------| ---------------------------------|
-| 1-12     | Flutter SDK 3.22.0+             | Windows, macOS, or Linux         |
-| 1-12     | Dart 3.4.0+                     | Windows, macOS, or Linux         |
+| Chapter  | Software required               | OS required                            |
+| -------- | --------------------------------| ---------------------------------------|
+| 1-12     | Flutter SDK 3.22.0+             | Windows, macOS, Linux, or ChromeOS     |
+| 1-12     | Dart 3.4.0+                     | Windows, macOS, Linux, or ChromeOS     |
 
 
 ## Related products <Other books you may enjoy>
