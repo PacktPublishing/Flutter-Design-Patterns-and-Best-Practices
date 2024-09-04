@@ -30,12 +30,12 @@ All of the code is organized into folders. For example, CH02.
 The code will look like the following:
 ```
 Container(
-    constraints: BoxConstraints.tight(
-      const Size(200, 100),
-    ),
-    color: Colors.red,
-    child: Text('Hello World'),
- ); 
+  constraints: BoxConstraints.tight(
+    const Size(200, 100),
+  ),
+  color: Colors.red,
+  child: const Text('Hello World'),
+);
 
 ```
 
