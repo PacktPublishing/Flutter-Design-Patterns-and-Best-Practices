@@ -1,4 +1,5 @@
-import 'package:candy_store/cart_view_model_provider.dart';
+import 'package:candy_store/cart_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:candy_store/product_details_page.dart';
 import 'package:candy_store/product_list_item.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class ProductListItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartViewModel = CartViewModelProvider.of(context);
+    final cartCubit = context.read<CartCubit>();
 
     return GestureDetector(
       onTap: () {
@@ -75,7 +76,7 @@ class ProductListItemView extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 GestureDetector(
-                  onTap: () => cartViewModel.addToCart(item),
+                  onTap: () => cartCubit.addToCart(item),
                   child: Icon(
                     Icons.add,
                     size: 24,

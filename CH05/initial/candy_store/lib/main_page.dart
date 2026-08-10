@@ -1,6 +1,8 @@
 import 'package:candy_store/cart_button.dart';
-import 'package:candy_store/cart_view_model_provider.dart';
+import 'package:candy_store/cart_cubit.dart';
+import 'package:candy_store/cart_state.dart';
 import 'package:candy_store/cart_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:candy_store/products_page.dart';
 import 'package:flutter/material.dart';
 
@@ -14,11 +16,8 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    final cartViewModel = CartViewModelProvider.of(context);
-
-    return ListenableBuilder(
-      listenable: cartViewModel,
-      builder: (context, _) {
+    return BlocBuilder<CartCubit, CartState>(
+      builder: (context, state) {
         return Stack(
           children: [
             const ProductsPage(),
@@ -28,7 +27,7 @@ class _MainPageState extends State<MainPage> {
               child: GestureDetector(
                 onTap: openCart,
                 child: CartButton(
-                  count: cartViewModel.state.totalItems,
+                  count: state.totalItems,
                 ),
               ),
             ),
@@ -41,7 +40,7 @@ class _MainPageState extends State<MainPage> {
   void openCart() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => CartPage.withBloc(),
+        builder: (context) => CartPage.withCubit(),
       ),
     );
   }
