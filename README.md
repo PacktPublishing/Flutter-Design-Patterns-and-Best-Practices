@@ -9,6 +9,12 @@ This is the code repository for [Flutter Design Patterns and Best Practices](htt
 ## What is this book about?
 As Flutter continues its rapid adoption by developers and businesses alike, the demand for skilled developers who can deliver high-quality Flutter apps continues to increase as well. Moreover, when you're building for yourself, you don’t always need to think about scalability and business goals, if you’re simply developing apps as a hobby. However, when you build apps for businesses, you're helping them use specific tools to achieve their goals, which requires solutions to be fast, reliable, and delivered on time. This book will help you meet these business requirements.
 	
+### Second Edition Updates & Goals
+The **Second Edition** branch brings this repository up to date with modern best practices, focusing on:
+* **Flutter 3.44+ & WebAssembly (Wasm)** compilation targeting edge performance.
+* **Modern State Management:** Migrating to **Freezed 3.x** and leveraging Dart 3's `sealed class` unions for foolproof state representation.
+* **AI Integration:** A completely new AI chapter covering multi-model orchestration with `gemini-3.6-flash` (vision) and `gemini-3.5-flash-lite` (text) via `firebase_vertexai`.
+* **PWA Security & Offline First:** Robust fixes for iOS Safari 7-day cache eviction (`navigator.storage.persist()`).
 This book covers the following exciting features:
 * Translate business requirements into technical solutions
 * Understand when and where specific design patterns would be applicable
