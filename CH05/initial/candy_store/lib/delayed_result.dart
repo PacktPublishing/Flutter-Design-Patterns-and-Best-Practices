@@ -1,36 +1,20 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class DelayedResult<T> extends Equatable {
-  final T? value;
-  final Exception? error;
-  final bool isInProgress;
+part 'delayed_result.freezed.dart';
 
-  const DelayedResult.fromError(Exception e)
-      : value = null,
-        error = e,
-        isInProgress = false;
+@freezed
+sealed class DelayedResult<T> with _$DelayedResult<T> {
+  const DelayedResult._();
 
-  const DelayedResult.fromValue(T result)
-      : value = result,
-        error = null,
-        isInProgress = false;
+  const factory DelayedResult.idle() = _Idle<T>;
+  const factory DelayedResult.inProgress() = _InProgress<T>;
+  const factory DelayedResult.fromValue(T value) = _FromValue<T>;
+  const factory DelayedResult.fromError(Exception error) = _FromError<T>;
 
-  const DelayedResult.inProgress()
-      : value = null,
-        error = null,
-        isInProgress = true;
-
-  const DelayedResult.idle()
-      : value = null,
-        error = null,
-        isInProgress = false;
-
-  bool get isSuccessful => value != null;
-
-  bool get isError => error != null;
-
-  bool get isIdle => value == null && error == null && !isInProgress;
-
-  @override
-  List<Object?> get props => [value, error, isInProgress];
+  bool get isSuccessful => this is _FromValue<T>;
+  bool get isError => this is _FromError<T>;
+  bool get isIdle => this is _Idle<T>;
+  bool get isInProgress => this is _InProgress<T>;
+  T? get value => this is _FromValue<T> ? (this as _FromValue<T>).value : null;
+  Exception? get error => this is _FromError<T> ? (this as _FromError<T>).error : null;
 }
